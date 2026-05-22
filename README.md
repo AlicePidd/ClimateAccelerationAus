@@ -2,7 +2,7 @@
 
 This repo contains R code underpinning the analyses for my fourth thesis chapter:
 
-> ### "Climate acceleration highlights regions of intensifying exposure to warming"
+> ### Climate acceleration highlights regions of intensifying exposure to warming
 >
 > *Alice M. Pidd*<sup>*1*</sup>*, David S. Schoeman*<sup>*1,2*</sup>*, Anthony J. Richardson*<sup>*3-5*</sup>*, Kylie L. Scales*<sup>*1*</sup>
 >
