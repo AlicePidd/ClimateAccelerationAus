@@ -26,13 +26,21 @@ ClimateConnectivity
 └── supplementary       <--- supplementary materials for the manuscript
 ```
 
+## Overview
+
+Here, we explore the utility of our novel climate metric, **climate acceleration**, as a complementary metric of exposure in addition to existing approaches for climate-smart conservation planning — for example, using climate velocity to identify climate refugia (areas of the least/slowest change in climate).
+
+We used estimates of local climate velocity to compute **climate acceleration** as the slope of velocities per 20-year IPCC period from 1995-2090, under four IPCC AR6 emissions scenarios. We use Australian waters as a case study, applying the **climate velocity-acceleration** fields in tandem to yield a combined exposure landscape across the continental EEZ, and in relation to marine protected areas.
+
 ## Workflow
 
-Here, we explore the utility of our novel climate metric, **climate acceleration**, as a complementary metric of exposure in addition to existing approaches for climate-smart conservation planning — for example, using climate velocity to identify climate refugia (areas of the least/slowest change in climate). We used estimates of local climate velocity to compute **climate acceleration** as the slope of velocities per 20-year IPCC period from 1995-2090, under four IPCC AR6 emissions scenarios. We use Australian waters as a case study, applying the **climate velocity-acceleration** fields in tandem to yield a combined exposure landscape across the continental EEZ, and in relation to marine protected areas.
+Scripts included in this repo reflect the entire code base for computing gradient-based climate velocity (km decade^-1^), climate acceleration (km decade^-2^), and for plotting outputs that appear in my final thesis chapter.
 
-Scripts included in this repo reflect the entire code base for computing gradient-based climate velocity (km decade\^-1), climate acceleration (km decade\^-2), and for plotting outputs that appear in my final thesis chapter.
+Climate velocity computations followed the workflow found in the `VoCC` R package (Molinos et al. 2019) at <https://github.com/JorGarMol/VoCC>, reworked slightly for `terra`.
 
-Climate velocity computations followed the workflow found in the `VoCC` R package (Molinos et al. 2019) at <https://github.com/JorGarMol/VoCC>, reworked slightly for `terra`. Workflow regarding the Earth System Model (ESM) outputs used to compute climate velocity are not included in this repo. ESMs of sea surface temperature (SST) are publicly available from data nodes via the Earth System Grid Federation MetaGrid (<https://esgf.nci.org.au/search>). Workflow for downloading, wrangling, and processing ESMs can be followed in the `hotrstuff` package and GitHub repo (Buenafe, Schoeman, & Everett 2024) at <https://github.com/SnBuenafe/hotrstuff>.
+Workflow regarding the Earth System Model (ESM) outputs used to compute climate velocity are not included in this repo. ESMs of sea surface temperature (SST) are publicly available from data nodes via the Earth System Grid Federation MetaGrid (<https://esgf.nci.org.au/search>).
+
+Workflow for downloading, wrangling, and processing ESMs can be followed in the `hotrstuff` package and GitHub repo (Buenafe, Schoeman, & Everett 2024) at <https://github.com/SnBuenafe/hotrstuff>.
 
 Background data and shapefiles included relate specifically to the case study region (here, continental Australia).
 
