@@ -7,7 +7,7 @@
 
 # Packages ---------------------------------------------------------------------
 
-pacman::p_load(RCurl, xml2, rvest, tidyverse, furrr, future, terra, parallel, beepr, tictoc, sf, scales, patchwork, ggthemes, RColorBrewer)
+pacman::p_load(RCurl, xml2, rvest, tidyverse, furrr, future, terra, parallel, beepr, tictoc, sf, scales, patchwork, ggthemes, RColorBrewer, CircStats)
 
 
 
