@@ -124,13 +124,10 @@
         nm_yr <- yrs[[i]][11] # The year we're calculating for
         
         if(term == "recent") {
-          # names(out) <- paste0(nm_yr, "_historical_", esm)
           lab <- paste0(nm_yr, "_historical_", esm)
         } else {
-          # names(out) <- paste0(nm_yr, "_", ssp, "_", esm)
           lab <- paste0(nm_yr, "_", ssp, "_", esm)
         }
-        # return(out)
         names(vel) <- lab
         names(trend) <- lab
         names(grad) <- lab
@@ -138,34 +135,18 @@
         return(list(vel = vel, trend = trend, grad = grad))
       }
       
-    # result <- map(indexing, compute) %>% rast()  # km/year
     results <- map(indexing, compute)
     
     # Velocity (unchanged from original)
-    result <- map(results, "vel") %>% rast()  # km/year
-    result_decadal <- result * 10 # km/decade
+    vel_annual <- map(results, "vel") %>% rast()  # km/year
+    vel_decadal <- vel_annual * 10 # km/decade
     
     # NEW: trend and gradient
     trend_annual <- map(results, "trend") %>% rast() # °C/year
+    time(trend_annual) <- NULL # drop inherited time (velocity doesn't have one)
     trend_decadal <- trend_annual * 10 # °C/decade
     grad <- map(results, "grad") %>% rast() # °C/km (no time unit, so no decadal version)
     
-    # make_path <- function(rate) {
-    #   fol <- if(rate == "annual") {
-    #     if(term == "all") vocc_yr_fol else vocc_term_yr_fol
-    #   } else {
-    #     if(term == "all") vocc_dec_fol else vocc_term_dec_fol
-    #   }
-    #   
-    #   if(term == "all") {
-    #     paste0(fol, "/vocc_", rate, "_", ssp, "_", esm, "_", min(range), "-", max(range), ".RDS")
-    #   } else if(term == "recent") {
-    #     paste0(fol, "/vocc_", rate, "_historical_", esm, "_", term, "_", min(range), "-", max(range), ".RDS")
-    #   } else {
-    #     paste0(fol, "/vocc_", rate, "_", ssp, "_", esm, "_", term, "_", min(range), "-", max(range), ".RDS")
-    #   }
-    # }
-
     # Builds the file path. rate = NULL for the gradient (no annual/decadal)
     make_path <- function(fol, var, rate = NULL) {
       rate_tag <- if(is.null(rate)) "" else paste0(rate, "_")
@@ -184,10 +165,8 @@
     
     
     # Velocity (same file names and folders as the original script)
-    # saveRDS(result, make_path("annual")) # km/year
-    # saveRDS(result_decadal, make_path("decadal")) # km/decade
-    saveRDS(result, make_path(pick(vocc_yr_fol, vocc_term_yr_fol), "vocc", "annual")) # km/year
-    saveRDS(result_decadal, make_path(pick(vocc_dec_fol, vocc_term_dec_fol), "vocc", "decadal")) # km/decade
+    saveRDS(vel_annual, make_path(pick(vocc_yr_fol, vocc_term_yr_fol), "vocc", "annual")) # km/year
+    saveRDS(vel_decadal, make_path(pick(vocc_dec_fol, vocc_term_dec_fol), "vocc", "decadal")) # km/decade
     
     # trend
     saveRDS(trend_annual, make_path(pick(trend_yr_fol, trend_term_yr_fol), "trend", "annual")) # °C/year
@@ -200,16 +179,14 @@
      
   # Full projected time series 2015-2100
   tic()
-  get_velocity(files[1], years, "all")
-  # walk(files, ~get_velocity(.x, years, "all")) 
-  toc() # 20 min on Alice's machine
+  walk(files, ~get_velocity(.x, years, "all"))
+  toc() # 23 min on Alice's machine
 
   # By terms
   tic()
   walk(term_list[2:5], function(term) { # No recent-past yet
     message("Processing: ", term, "-term")
-    # walk(files, ~get_velocity(.x, years, term))
-    get_velocity(files[1], years, term)
+    walk(files, ~get_velocity(.x, years, term))
   })
   toc() # 19 mins on Alice's machine
 
@@ -219,5 +196,3 @@
   toc() # 8 sec
   
   beep(2)
-  
-  
